@@ -3,17 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>To Do List</title>
+    <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 <h1> To Do List</h1>
 <h3>Add tasks</h3>
-<form id="new-task-form">
-    <label for="description-field">Description: </label>
-    <input type="text" id="description-field" placeholder="description"/><br><br>
-    <label for="deadline-field">Deadline:</label>
-    <input type="date" id="deadline-field" placeholder="deadline"/>
+<div id="add-task">
+    <form id="new-task-form">
+        <label for="description-field">Description: </label>
+        <input type="text" id="description-field" placeholder="description"/><br><br>
+        <label for="deadline-field">Deadline:</label>
+        <input type="date" id="deadline-field" placeholder="deadline"/>
+        <input type="submit" value="Save"/>
+    </form>
+</div>
+<div>
+    <table id="tasks-table">
+        <thead>
+        <tr>
+            <th>Description</th>
+            <th>Deadline</th>
+            <th>Done</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Learn Html</td>
+            <td>20.03.2021</td>
+            <td><label>
+                <input type="checkbox" data-id="1" class="mark-done">
+            </label>
+            </td>
+            <td><a href="#" data-id="1" class="delete-task">X</a></td>
+        </tr>
+        <tr>
+            <td>Learn CSS</td>
+            <td>23.03.2021</td>
+            <td><label>
+                <input type="checkbox" data-id="1" class="mark-done">
+            </label>
+            </td>
+            <td><a href="#" data-id="1" class="delete-task">X</a></td>
+        </tr>
+        </tbody>
+    </table>
 
-</form>
+
+</div>
 
 </body>
 </html>
