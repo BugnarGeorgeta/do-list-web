@@ -10,6 +10,24 @@ window.DoList = {
         })
     },
 
+    createTask: function () {
+        let descriptionValue = $("#description-field").val();
+        let deadlineValue = $("#deadline-field").val();
+        let requestBody = {
+            description: descriptionValue,
+            deadline: deadlineValue,
+        };
+        $.ajax({
+            url: DoList.API_URL,
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(requestBody)
+        }).done(function () {
+            DoList.getTasks();
+        })
+
+    },
+
     getTaskRow: function (task) {
         let formattedDeadliane = new Date(...task.deadline).toLocaleDateString("ro");
         let checkedAtributte = task.done ? "checked" : "";
@@ -28,6 +46,15 @@ window.DoList = {
         tasks.forEach(task => tableBody += DoList.getTaskRow(task));
         $("#tasks-table tbody").html(tableBody);
 
+    },
+    bindEvents: function () {
+        $("#new-task-form").submit(function (event) {
+            event.preventDefault(),
+                DoList.createTask();
+        })
     }
+
+
 };
 DoList.getTasks();
+DoList.bindEvents();
