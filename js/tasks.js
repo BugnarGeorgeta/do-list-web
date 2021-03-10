@@ -27,6 +27,19 @@ window.DoList = {
         })
 
     },
+    updateTask:function (id,done){
+        let requestBody={
+            done:done,
+        };
+        $.ajax({
+            url:DoList.API_URL+"?id="+id,
+            method:"PUT",
+            contentType: "application/json",
+            data: JSON.stringify(requestBody)
+        }).done(function(){
+            DoList.getTasks();
+        })
+    },
 
     getTaskRow: function (task) {
         let formattedDeadliane = new Date(...task.deadline).toLocaleDateString("ro");
@@ -35,10 +48,10 @@ window.DoList = {
             <td>${task.description}</td>
             <td>${formattedDeadliane}</td>
             <td><label>
-                <input type="checkbox" data-id="${task.id}class="mark-done" ${checkedAtributte}>
+                <input type="checkbox" data-id=${task.id} class="mark-done" ${checkedAtributte}>
             </label>
             </td>
-            <td><a href="#" data-id=${task.id}class="delete-task"><i class="fas fa-trash"></i></a></td>
+            <td><a href="#" data-id=${task.id} class="delete-task"><i class="fas fa-trash"></i></a></td>
         </tr>`
     },
     displayTasks: function (tasks) {
@@ -49,8 +62,18 @@ window.DoList = {
     },
     bindEvents: function () {
         $("#new-task-form").submit(function (event) {
-            event.preventDefault(),
+            event.preventDefault();
                 DoList.createTask();
+        });
+        $("#tasks-table").delegate(". mark-done", "change", function (event){
+            event.preventDefault();
+
+            let taskId=$(this).data("id");
+            let checked=$(this).is(":checked");
+
+            DoList.updateTask(taskId,checked);
+
+
         })
     }
 
